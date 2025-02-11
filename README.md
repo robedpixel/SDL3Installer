@@ -11,3 +11,7 @@ Currently doesn't show any UI, but this installs to the Program Files folder und
 3. Unzip the sdl binaries to the `install` folder
 4. Run `dotnet build` on the root folder
 5. The finished installer will be in `/bin/Debug`
+
+## Relevant Generated MSI Variables
+- `INSTALLLOCATION`
+  - Folder where SDL2 files will be installed in
