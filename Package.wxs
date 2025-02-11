@@ -1,22 +1,28 @@
-<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Package Name="SDL2" Manufacturer="RobbyTech"
+<Wix
+	xmlns="http://wixtoolset.org/schemas/v4/wxs"
+	xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+	<Package Name="SDL2" Manufacturer="RobbyTech"
            Version="2.32.0" UpgradeCode="b4f1f4b9-2377-4e2e-90f8-4cba7b2bee55"
            Compressed="yes" >
-      <MediaTemplate EmbedCab="yes" />
-      <StandardDirectory Id="ProgramFiles64Folder">
-        <Directory Id="INSTALLFOLDER" Name="!(bind.Property.ProductName)" />
-      </StandardDirectory>
-      <ComponentGroup Id="Components">
-       <Component
+		<MediaTemplate EmbedCab="yes" />
+		<StandardDirectory Id="ProgramFiles64Folder">
+			<Directory Id="INSTALLFOLDER" Name="!(bind.Property.ProductName)" />
+		</StandardDirectory>
+		<ui:WixUI
+        Id="WixUI_InstallDir"
+        InstallDirectory="INSTALLFOLDER"
+        />
+		<ComponentGroup Id="Components">
+			<Component
         Id="MainInstall"
         Guid="0d9ba8f5-b959-4319-bbd1-a57617bc9332"
         Directory="INSTALLFOLDER"
         Bitness="always64"
         >
-        <File Source="install/.git-hash" />
-        <File Source="install/README-SDL.txt" />
-        <File Source="install/SDL2.dll" />
-        <Environment
+				<File Source="install/.git-hash" />
+				<File Source="install/README-SDL.txt" />
+				<File Source="install/SDL2.dll" />
+				<Environment
          Id="PATH"
          Name="PATH"
          Value="[INSTALLFOLDER]"
@@ -24,8 +30,10 @@
          Part="last"
          Action="set"
          System="yes" />
-       </Component>
-      </ComponentGroup>
-      <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
- </Package>
+			</Component>
+		</ComponentGroup>
+		<Feature Id="SDLFeature">
+      <ComponentGroupRef Id="Components" />
+    </Feature>
+	</Package>
 </Wix>
