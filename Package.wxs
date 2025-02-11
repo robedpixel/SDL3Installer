@@ -20,7 +20,7 @@
          Id="PATH"
          Name="PATH"
          Value="[INSTALLFOLDER]"
-         Permanent="yes"
+         Permanent="no"
          Part="last"
          Action="set"
          System="yes" />
