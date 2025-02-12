@@ -1,8 +1,8 @@
 <Wix
 	xmlns="http://wixtoolset.org/schemas/v4/wxs"
 	xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
-	<Package Name="SDL2" Manufacturer="RobbyTech"
-           Version="2.32.0" UpgradeCode="b4f1f4b9-2377-4e2e-90f8-4cba7b2bee55"
+	<Package Name="SDL3" Manufacturer="RobbyTech"
+           Version="3.2.4" UpgradeCode="b4f1f4b9-2377-4e2e-90f8-4cba7b2bee55"
            Compressed="yes" >
 		<MediaTemplate EmbedCab="yes" />
 		<StandardDirectory Id="ProgramFiles64Folder">
@@ -21,7 +21,7 @@
         >
 				<File Source="install/.git-hash" />
 				<File Source="install/README-SDL.txt" />
-				<File Source="install/SDL2.dll" />
+				<File Source="install/SDL3.dll" />
 				<Environment
          Id="PATH"
          Name="PATH"
