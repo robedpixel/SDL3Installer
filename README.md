@@ -2,7 +2,7 @@
 
 Because people are too lazy to make an installer for SDL3
 
-Currently doesn't show any UI, but this installs to the Program Files folder under `SDL3` and sets the path to include that folder
+By default, this installs to the Program Files folder under `SDL3` and sets the path to include that folder
 
 ## How to Use
 
