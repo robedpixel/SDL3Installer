@@ -20,7 +20,8 @@
         Bitness="always64"
         >
 				<File Source="install/.git-hash" />
-				<File Source="install/README-SDL.txt" />
+        <File Source="install/LICENSE.txt" />
+				<File Source="install/README.md" />
 				<File Source="install/SDL3.dll" />
 				<Environment
          Id="PATH"
