@@ -6,17 +6,17 @@
            Compressed="yes" >
 		<MediaTemplate EmbedCab="yes" />
 		<StandardDirectory Id="ProgramFiles64Folder">
-			<Directory Id="INSTALLFOLDER" Name="!(bind.Property.ProductName)" />
+			<Directory Id="INSTALLDIR" Name="!(bind.Property.ProductName)" />
 		</StandardDirectory>
 		<ui:WixUI
         Id="WixUI_InstallDir"
-        InstallDirectory="INSTALLFOLDER"
+        InstallDirectory="INSTALLDIR"
         />
 		<ComponentGroup Id="Components">
 			<Component
         Id="MainInstall"
         Guid="0d9ba8f5-b959-4319-bbd1-a57617bc9332"
-        Directory="INSTALLFOLDER"
+        Directory="INSTALLDIR"
         Bitness="always64"
         >
 				<File Source="install/.git-hash" />
@@ -25,7 +25,7 @@
 				<Environment
          Id="PATH"
          Name="PATH"
-         Value="[INSTALLFOLDER]"
+         Value="[INSTALLDIR]"
          Permanent="no"
          Part="last"
          Action="set"
