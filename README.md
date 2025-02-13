@@ -9,8 +9,9 @@ By default, this installs to the Program Files folder under `SDL3` and sets the 
 1. Download the SDL3 binaries from https://github.com/libsdl-org/SDL
 2. Create a folder in the root folder named `install`
 3. Unzip the sdl binaries to the `install` folder
-4. Run `dotnet build` on the root folder
-5. The finished installer will be in `/bin/Debug`
+4. Fill out the license.rtf file in the license folder with your end-user license agreement
+5. Run `dotnet build` on the root folder
+6. The finished installer will be in `/bin/Debug`
 
 ## Relevant Generated MSI Variables
 - `INSTALLDIR`

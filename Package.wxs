@@ -4,6 +4,7 @@
 	<Package Name="SDL3" Manufacturer="RobbyTech"
            Version="3.2.4" UpgradeCode="b4f1f4b9-2377-4e2e-90f8-4cba7b2bee55"
            Compressed="yes" >
+        <WixVariable Id="WixUILicenseRtf" Value="license/license.rtf" />
 		<MediaTemplate EmbedCab="yes" />
 		<StandardDirectory Id="ProgramFiles64Folder">
 			<Directory Id="INSTALLDIR" Name="!(bind.Property.ProductName)" />
