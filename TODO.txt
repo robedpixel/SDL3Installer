@@ -1,1 +1,0 @@
-add license info to installer while respecting authors of SDL
