@@ -1,37 +1,18 @@
-<Wix
-	xmlns="http://wixtoolset.org/schemas/v4/wxs"
-	xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
-	<Package Name="SDL3" Manufacturer="RobbyTech"
-           Version="3.2.4" UpgradeCode="b4f1f4b9-2377-4e2e-90f8-4cba7b2bee55"
-           Compressed="yes" >
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+	<Package Name="SDL3" Manufacturer="RobbyTech" Version="3.2.4" UpgradeCode="b4f1f4b9-2377-4e2e-90f8-4cba7b2bee55" Compressed="yes">
         <WixVariable Id="WixUILicenseRtf" Value="license/license.rtf" />
 		<MediaTemplate EmbedCab="yes" />
 		<StandardDirectory Id="ProgramFiles64Folder">
 			<Directory Id="INSTALLDIR" Name="!(bind.Property.ProductName)" />
 		</StandardDirectory>
-		<ui:WixUI
-        Id="WixUI_InstallDir"
-        InstallDirectory="INSTALLDIR"
-        />
+		<ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLDIR" />
 		<ComponentGroup Id="Components">
-			<Component
-        Id="MainInstall"
-        Guid="0d9ba8f5-b959-4319-bbd1-a57617bc9332"
-        Directory="INSTALLDIR"
-        Bitness="always64"
-        >
+			<Component Id="MainInstall" Guid="0d9ba8f5-b959-4319-bbd1-a57617bc9332" Directory="INSTALLDIR" Bitness="always64">
 				<File Source="install/.git-hash" />
         <File Source="install/LICENSE.txt" />
 				<File Source="install/README.md" />
 				<File Source="install/SDL3.dll" />
-				<Environment
-         Id="PATH"
-         Name="PATH"
-         Value="[INSTALLDIR]"
-         Permanent="no"
-         Part="last"
-         Action="set"
-         System="yes" />
+				<Environment Id="PATH" Name="PATH" Value="[INSTALLDIR]" Permanent="no" Part="last" Action="set" System="yes" />
 			</Component>
 		</ComponentGroup>
 		<Feature Id="SDLFeature">
