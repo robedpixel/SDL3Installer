@@ -6,7 +6,7 @@ By default, this installs to the Program Files folder under `SDL3` and sets the 
 
 ## How to Use
 
-1. Run BuildSDLAndGenerateInstaller.py
+1. Run DownloadSDLAndGenerateInstaller.py
 2. The finished installer will be in `/bin/debug`
 
 Or if you want to manually install:
