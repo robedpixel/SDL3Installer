@@ -23,6 +23,8 @@ def main():
 
     windows_regex = "win32-x64"
     file_blacklist = ["INSTALL.md"]
+    install_dir = "install"
+    files_to_install = []
 
     # Download latest windows x64 zip file from sdl repo
 
@@ -42,7 +44,7 @@ def main():
         if re.search(windows_regex, asset["name"]):
             dirname = os.path.dirname(__file__)
             temp_folder = os.path.join(dirname, "temp")
-            install_folder = os.path.join(dirname, "install")
+            install_folder = os.path.join(dirname, install_dir)
 
             Path(temp_folder).mkdir(parents=True, exist_ok=True)
             # Download contents into temp
@@ -60,10 +62,11 @@ def main():
                 if filename in file_blacklist:
                     continue
                 else:
+                    files_to_install.append(filename)
                     os.replace(
                         temp_folder + "\\" + filename, install_folder + "\\" + filename
                     )
-            # TODO: edit wxs file with new version
+            # edit wxs file with new version and files
 
             wxs_file = os.path.join(dirname, "Package.wxs")
             ET.register_namespace("", "http://wixtoolset.org/schemas/v4/wxs")
@@ -73,7 +76,19 @@ def main():
             for elem in root:
                 if elem.tag == "{http://wixtoolset.org/schemas/v4/wxs}Package":
                     elem.attrib["Version"] = library_version
-                    break
+                    for sub_elem_1 in elem:
+                        if sub_elem_1.tag == "{http://wixtoolset.org/schemas/v4/wxs}ComponentGroup":
+                            for sub_elem_2 in sub_elem_1:
+                                if sub_elem_2.tag == "{http://wixtoolset.org/schemas/v4/wxs}Component" and sub_elem_2.attrib.get("Id")=="MainInstall":
+                                    # Remove all old file entries
+                                    for sub_elem_3 in sub_elem_2:
+                                        if sub_elem_3.tag == "{http://wixtoolset.org/schemas/v4/wxs}File":
+                                            sub_elem_2.remove(sub_elem_3)
+                                    for file in files_to_install:
+                                        b = ET.SubElement(sub_elem_2, "{http://wixtoolset.org/schemas/v4/wxs}File")
+                                        b.attrib["Source"] = install_folder+"/"+file
+                                    break
+
             tree.write(wxs_file)
             try:
                 shutil.rmtree(temp_folder)
@@ -81,8 +96,8 @@ def main():
                 print("Error: %s - %s." % (e.filename, e.strerror))
             # Build Installer
 
-            os.chdir(dirname)
-            os.system("dotnet build")
+            #os.chdir(dirname)
+            #os.system("dotnet build")
 
 
 if __name__ == "__main__":

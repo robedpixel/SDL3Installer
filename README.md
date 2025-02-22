@@ -6,8 +6,9 @@ By default, this installs to the Program Files folder under `SDL3` and sets the 
 
 ## How to Use
 
-1. Run DownloadSDLAndGenerateInstaller.py
-2. The finished installer will be in `/bin/debug`
+1. Fill out the license.rtf file in the license folder with your end-user license agreement
+2. Run DownloadSDLAndGenerateInstaller.py
+3. The finished installer will be in `/bin/debug`
 
 Or if you want to manually install:
 

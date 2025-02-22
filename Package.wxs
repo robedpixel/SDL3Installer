@@ -8,12 +8,10 @@
 		<ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLDIR" />
 		<ComponentGroup Id="Components">
 			<Component Id="MainInstall" Guid="0d9ba8f5-b959-4319-bbd1-a57617bc9332" Directory="INSTALLDIR" Bitness="always64">
-				<File Source="install/.git-hash" />
-        <File Source="install/LICENSE.txt" />
-				<File Source="install/README.md" />
+				<File Source="install/LICENSE.txt" />
 				<File Source="install/SDL3.dll" />
 				<Environment Id="PATH" Name="PATH" Value="[INSTALLDIR]" Permanent="no" Part="last" Action="set" System="yes" />
-			</Component>
+			<File Source="D:\WLCommonFiles\Programming\Current Projects\SDL2WindowsInstaller\install/.git-hash" /><File Source="D:\WLCommonFiles\Programming\Current Projects\SDL2WindowsInstaller\install/LICENSE.txt" /><File Source="D:\WLCommonFiles\Programming\Current Projects\SDL2WindowsInstaller\install/README.md" /><File Source="D:\WLCommonFiles\Programming\Current Projects\SDL2WindowsInstaller\install/SDL3.dll" /></Component>
 		</ComponentGroup>
 		<Feature Id="SDLFeature">
       <ComponentGroupRef Id="Components" />
