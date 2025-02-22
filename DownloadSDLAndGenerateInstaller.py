@@ -73,22 +73,24 @@ def main():
             ET.register_namespace("ui", "http://wixtoolset.org/schemas/v4/wxs/ui")
             tree = ET.parse(wxs_file)
             root = tree.getroot()
-            for elem in root:
+            for elem in root.iter():
                 if elem.tag == "{http://wixtoolset.org/schemas/v4/wxs}Package":
                     elem.attrib["Version"] = library_version
-                    for sub_elem_1 in elem:
+                    for sub_elem_1 in elem.iter():
                         if sub_elem_1.tag == "{http://wixtoolset.org/schemas/v4/wxs}ComponentGroup":
-                            for sub_elem_2 in sub_elem_1:
+                            for sub_elem_2 in sub_elem_1.iter():
                                 if sub_elem_2.tag == "{http://wixtoolset.org/schemas/v4/wxs}Component" and sub_elem_2.attrib.get("Id")=="MainInstall":
                                     # Remove all old file entries
-                                    for sub_elem_3 in sub_elem_2:
+                                    elements_to_remove = []
+                                    for sub_elem_3 in sub_elem_2.iter():
                                         if sub_elem_3.tag == "{http://wixtoolset.org/schemas/v4/wxs}File":
-                                            sub_elem_2.remove(sub_elem_3)
+                                             elements_to_remove.append(sub_elem_3)
+                                    for e in elements_to_remove:
+                                        sub_elem_2.remove(e)
                                     for file in files_to_install:
-                                        b = ET.SubElement(sub_elem_2, "{http://wixtoolset.org/schemas/v4/wxs}File")
-                                        b.attrib["Source"] = install_folder+"/"+file
+                                        b = ET.SubElement(sub_elem_2, "{http://wixtoolset.org/schemas/v4/wxs}File").set("Source",install_dir+"/"+file)
                                     break
-
+            ET.indent(tree, '  ') 
             tree.write(wxs_file)
             try:
                 shutil.rmtree(temp_folder)
@@ -96,8 +98,8 @@ def main():
                 print("Error: %s - %s." % (e.filename, e.strerror))
             # Build Installer
 
-            #os.chdir(dirname)
-            #os.system("dotnet build")
+            os.chdir(dirname)
+            os.system("dotnet build")
 
 
 if __name__ == "__main__":
