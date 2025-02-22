@@ -53,7 +53,12 @@ def main():
             r = requests.get(download_url)
             z = zipfile.ZipFile(io.BytesIO(r.content))
             z.extractall(temp_folder)
-
+            # remove all files in install folder
+            for root, dirs, files in os.walk(install_folder):
+                for f in files:
+                    os.unlink(os.path.join(root, f))
+            for d in dirs:
+                shutil.rmtree(os.path.join(root, d))
             # move contents to install unless it's in blacklist
 
             temp_directory = os.fsencode(temp_folder)
