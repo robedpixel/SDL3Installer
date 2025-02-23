@@ -31,12 +31,13 @@ def main():
     github_sdl_repo_abs_path = (
         "https://api.github.com/repos" + github_sdl_repo_path + "/releases/latest"
     )
+    print("Getting latest SDL3 info")
     response_json = requests.get(url=github_sdl_repo_abs_path).json()
 
     # Grab version
 
     library_version = response_json["name"]
-
+    print("Latest version: " + library_version)
     # Iterate through assets and find x86_64 zip
 
     asset_list = response_json["assets"]
@@ -50,29 +51,33 @@ def main():
             # Download contents into temp
 
             download_url = asset["browser_download_url"]
+            print("Downloading SDL3...")
             r = requests.get(download_url)
             z = zipfile.ZipFile(io.BytesIO(r.content))
+            print("Extracting to temp folder...")
             z.extractall(temp_folder)
             # remove all files in install folder
+            print("Removing old install files...")
             for root, dirs, files in os.walk(install_folder):
                 for f in files:
                     os.unlink(os.path.join(root, f))
             for d in dirs:
                 shutil.rmtree(os.path.join(root, d))
             # move contents to install unless it's in blacklist
-
+            print("Adding new install files...")
             temp_directory = os.fsencode(temp_folder)
             for file in os.listdir(temp_directory):
                 filename = os.fsdecode(file)
                 if filename in file_blacklist:
                     continue
                 else:
+                    print("Adding: " + filename)
                     files_to_install.append(filename)
                     os.replace(
                         temp_folder + "\\" + filename, install_folder + "\\" + filename
                     )
             # edit wxs file with new version and files
-
+            print("Updating Package.wxs...")
             wxs_file = os.path.join(dirname, "Package.wxs")
             ET.register_namespace("", "http://wixtoolset.org/schemas/v4/wxs")
             ET.register_namespace("ui", "http://wixtoolset.org/schemas/v4/wxs/ui")
@@ -97,12 +102,13 @@ def main():
                                     break
             ET.indent(tree, '  ') 
             tree.write(wxs_file)
+            print("Removing temp folder...")
             try:
                 shutil.rmtree(temp_folder)
             except OSError as e:
                 print("Error: %s - %s." % (e.filename, e.strerror))
             # Build Installer
-
+            print("Building Installer...")
             os.chdir(dirname)
             os.system("dotnet build")
 
