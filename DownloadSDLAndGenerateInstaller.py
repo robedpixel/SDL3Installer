@@ -54,6 +54,7 @@ def main():
             print("Downloading SDL3...")
             r = requests.get(download_url)
             z = zipfile.ZipFile(io.BytesIO(r.content))
+            Path(temp_folder).mkdir(parents=True, exist_ok=True)
             print("Extracting to temp folder...")
             z.extractall(temp_folder)
             # remove all files in install folder
@@ -61,10 +62,11 @@ def main():
             for root, dirs, files in os.walk(install_folder):
                 for f in files:
                     os.unlink(os.path.join(root, f))
-            for d in dirs:
-                shutil.rmtree(os.path.join(root, d))
+                for d in dirs:
+                    shutil.rmtree(os.path.join(root, d))
             # move contents to install unless it's in blacklist
             print("Adding new install files...")
+            Path(install_folder).mkdir(parents=True, exist_ok=True)
             temp_directory = os.fsencode(temp_folder)
             for file in os.listdir(temp_directory):
                 filename = os.fsdecode(file)
