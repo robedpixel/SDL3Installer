@@ -113,6 +113,8 @@ def main():
             print("Building Installer...")
             os.chdir(dirname)
             os.system("dotnet build")
+            print(library_version)
+            break
 
 
 if __name__ == "__main__":
