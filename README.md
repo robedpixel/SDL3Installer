@@ -4,6 +4,10 @@ Because people are too lazy to make an installer for SDL3
 
 By default, this installs to the Program Files folder under `SDL3` and sets the path to include that folder
 
+## Required Software
+- Python
+- .NET SDK
+
 ## How to Use
 
 1. Fill out the license.rtf file in the license folder with your end-user license agreement
