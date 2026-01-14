@@ -7,6 +7,7 @@ By default, this installs to the Program Files folder under `SDL3` and sets the 
 ## Required Software
 - Python
 - .NET SDK
+  - WixToolset.UI.wixext package
 
 ## How to Use
 
