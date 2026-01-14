@@ -112,7 +112,7 @@ def main():
             # Build Installer
             print("Building Installer...")
             os.chdir(dirname)
-            os.system("dotnet build")
+            os.system("dotnet build SDL3Installer.wixproj -c Release -r win-x64")
             print(library_version)
             break
 
