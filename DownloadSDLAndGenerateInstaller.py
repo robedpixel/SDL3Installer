@@ -69,7 +69,7 @@ def main():
             print("Adding new install files...")
             Path(install_folder).mkdir(parents=True, exist_ok=True)
             temp_directory = os.fsencode(temp_folder)
-            lib_folder_created = false
+            lib_folder_created = False
             for file in os.listdir(temp_directory):
                 filename = os.fsdecode(file)
                 if filename in file_blacklist:
@@ -78,17 +78,17 @@ def main():
                     if Path(filename).suffix == ".dll":
                         if not lib_folder_created:
                             Path(install_folder+"/lib").mkdir(parents=True, exist_ok=True)
-                            lib_folder_created = true
-                        print("Adding: " + "lib/"+install_filename)
+                            lib_folder_created = True
+                        print("Adding: " + "lib/"+filename)
                         libs_to_install.append(filename)
                         os.replace(
-                            temp_folder + "\\" + filename, install_folder + "\\lib\\" + install_filename
+                            temp_folder + "\\" + filename, install_folder + "\\lib\\" + filename
                         )
                     else:
-                        print("Adding: " + install_filename)
-                        files_to_install.append(install_filename)
+                        print("Adding: " + filename)
+                        files_to_install.append(filename)
                         os.replace(
-                            temp_folder + "\\" + filename, install_folder + "\\" + install_filename
+                            temp_folder + "\\" + filename, install_folder + "\\" + filename
                         )
             # edit wxs file with new version and files
             print("Updating Package.wxs...")
