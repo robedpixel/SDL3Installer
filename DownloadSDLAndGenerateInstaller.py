@@ -22,9 +22,10 @@ def main():
     # version_regex = "([0-9]+[.]){2}[0-9]"
 
     windows_regex = "win32-x64"
-    file_blacklist = ["INSTALL.md"]
+    file_blacklist = ["INSTALL.md", ".git-hash"]
     install_dir = "install"
     files_to_install = []
+    libs_to_install = []
 
     # Download latest windows x64 zip file from sdl repo
 
@@ -68,16 +69,27 @@ def main():
             print("Adding new install files...")
             Path(install_folder).mkdir(parents=True, exist_ok=True)
             temp_directory = os.fsencode(temp_folder)
+            lib_folder_created = false
             for file in os.listdir(temp_directory):
                 filename = os.fsdecode(file)
                 if filename in file_blacklist:
                     continue
                 else:
-                    print("Adding: " + filename)
-                    files_to_install.append(filename)
-                    os.replace(
-                        temp_folder + "\\" + filename, install_folder + "\\" + filename
-                    )
+                    if Path(filename).suffix == ".dll":
+                        if not lib_folder_created:
+                            Path(install_folder+"/lib").mkdir(parents=True, exist_ok=True)
+                            lib_folder_created = true
+                        print("Adding: " + "lib/"+install_filename)
+                        libs_to_install.append(filename)
+                        os.replace(
+                            temp_folder + "\\" + filename, install_folder + "\\lib\\" + install_filename
+                        )
+                    else:
+                        print("Adding: " + install_filename)
+                        files_to_install.append(install_filename)
+                        os.replace(
+                            temp_folder + "\\" + filename, install_folder + "\\" + install_filename
+                        )
             # edit wxs file with new version and files
             print("Updating Package.wxs...")
             wxs_file = os.path.join(dirname, "Package.wxs")
@@ -101,7 +113,16 @@ def main():
                                         sub_elem_2.remove(e)
                                     for file in files_to_install:
                                         b = ET.SubElement(sub_elem_2, "{http://wixtoolset.org/schemas/v4/wxs}File").set("Source",install_dir+"/"+file)
-                                    break
+                                if sub_elem_2.tag == "{http://wixtoolset.org/schemas/v4/wxs}Component" and sub_elem_2.attrib.get("Id")=="LibInstall":
+                                    # Remove all old file entries
+                                    elements_to_remove = []
+                                    for sub_elem_3 in sub_elem_2.iter():
+                                        if sub_elem_3.tag == "{http://wixtoolset.org/schemas/v4/wxs}File":
+                                             elements_to_remove.append(sub_elem_3)
+                                    for e in elements_to_remove:
+                                        sub_elem_2.remove(e)
+                                    for file in libs_to_install:
+                                        b = ET.SubElement(sub_elem_2, "{http://wixtoolset.org/schemas/v4/wxs}File").set("Source",install_dir+"/lib/"+file)
             ET.indent(tree, '  ') 
             tree.write(wxs_file)
             print("Removing temp folder...")
