@@ -10,7 +10,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLDIR" />
     <ComponentGroup Id="Components">
-      <Component Id="MainInstall" Guid="0d9ba8f5-b959-4319-bbd1-a57617bc9332" Directory="INSTALLDIR" Bitness="always64">
+      <Component Id="MainInstall" Guid="b60ed528-33c0-4144-be4d-834528bf5a63" Directory="INSTALLDIR" Bitness="always64">
         <File Source="install/LICENSE.txt" />
         <File Source="install/README.md" />
       </Component>
