@@ -14,8 +14,10 @@
         <File Source="install/LICENSE.txt" />
         <File Source="install/README.md" />
       </Component>
-      <Component Id="LibInstall" Guid="13b09f05-fc6d-4066-bb72-7fd63936e94f" Directory="LIBDIR" Bitness="always64">
+      <Component Id="PathInstall" Guid="3225d115-cf99-4b9e-af4d-68ef89da7ee0" Directory="LIBDIR" Bitness="always64">
         <Environment Id="PATH" Name="PATH" Value="[LIBDIR]" Permanent="no" Part="last" Action="set" System="yes" />
+      </Component>
+      <Component Id="LibInstall" Guid="13b09f05-fc6d-4066-bb72-7fd63936e94f" Directory="LIBDIR" Bitness="always64">
         <File Source="install/lib/SDL3.dll" />
       </Component>
     </ComponentGroup>
