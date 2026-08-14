@@ -13,6 +13,7 @@ import json
 import os
 import shutil
 import xml.etree.ElementTree as ET
+import uuid
 from pathlib import Path
 
 
@@ -104,6 +105,7 @@ def main():
                         if sub_elem_1.tag == "{http://wixtoolset.org/schemas/v4/wxs}ComponentGroup":
                             for sub_elem_2 in sub_elem_1.iter():
                                 if sub_elem_2.tag == "{http://wixtoolset.org/schemas/v4/wxs}Component" and sub_elem_2.attrib.get("Id")=="MainInstall":
+                                    sub_elem_2.attrib["Guid"] = str(uuid.uuid4())
                                     # Remove all old file entries
                                     elements_to_remove = []
                                     for sub_elem_3 in sub_elem_2.iter():
@@ -114,6 +116,7 @@ def main():
                                     for file in files_to_install:
                                         b = ET.SubElement(sub_elem_2, "{http://wixtoolset.org/schemas/v4/wxs}File").set("Source",install_dir+"/"+file)
                                 if sub_elem_2.tag == "{http://wixtoolset.org/schemas/v4/wxs}Component" and sub_elem_2.attrib.get("Id")=="LibInstall":
+                                    sub_elem_2.attrib["Guid"] = str(uuid.uuid4())
                                     # Remove all old file entries
                                     elements_to_remove = []
                                     for sub_elem_3 in sub_elem_2.iter():
